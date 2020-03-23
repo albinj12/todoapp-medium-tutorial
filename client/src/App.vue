@@ -58,6 +58,7 @@
 <script>
 import axios from "axios";
 export default {
+  name: "App",
   data: () => ({
     newToDo: "",
     uncompletedTodos: [],
@@ -72,51 +73,19 @@ export default {
         .then(response => {
           this.message = response.data;
         });
-      // fetching uncompleted todos
-      axios
-        .get("http://localhost:3000/todo/uncompleted")
-        .then(response => (this.uncompletedTodos = response.data))
-        .catch(error => console.log(error));
-      // fetch completed task
-      axios
-        .get("http://localhost:3000/todo/completed")
-        .then(response => (this.completedTodos = response.data))
-        .catch(error => console.log(error));
       this.newTodo = "";
     },
     completeTodo(todoID) {
       axios
-        .post("http://localhost:3000/todo/complete/" + todoID, {
-          todoID: todoID
-        })
+        .post("http://localhost:3000/todo/complete/" + todoID)
         .then(response => {
           console.log(response.data);
         });
-      // fetching uncompleted todos
-      axios
-        .get("http://localhost:3000/todo/uncompleted")
-        .then(response => (this.uncompletedTodos = response.data))
-        .catch(error => console.log(error));
-      // fetch completed task
-      axios
-        .get("http://localhost:3000/todo/completed")
-        .then(response => (this.completedTodos = response.data))
-        .catch(error => console.log(error));
     },
     deleteTodo(todoID) {
       axios.delete("http://localhost:3000/todo/" + todoID).then(response => {
         console.log(response.data);
       });
-      // fetching uncompleted todos
-      axios
-        .get("http://localhost:3000/todo/uncompleted")
-        .then(response => (this.uncompletedTodos = response.data))
-        .catch(error => console.log(error));
-      // fetch completed task
-      axios
-        .get("http://localhost:3000/todo/completed")
-        .then(response => (this.completedTodos = response.data))
-        .catch(error => console.log(error));
     }
   },
   created() {
